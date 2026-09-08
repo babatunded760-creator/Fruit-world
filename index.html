@@ -1,0 +1,1357 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+     <title>FruitWorld | Discover Fruits</title>
+
+     <style>
+          * {
+               margin: 0;
+               padding: 0;
+               box-sizing: border-box;
+               font-family: Arial, sans-serif;
+          }
+
+          html {
+               scroll-behavior: smooth;
+          }
+
+          body {
+               background: #fffdf5;
+               color: #26351f;
+          }
+
+          /* NAVBAR */
+
+          nav {
+               position: sticky;
+               top: 0;
+               z-index: 1000;
+               background: white;
+               padding: 18px 7%;
+               display: flex;
+               justify-content: space-between;
+               align-items: center;
+               box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+          }
+
+          .logo {
+               font-size: 27px;
+               font-weight: 800;
+               color: #2e7d32;
+          }
+
+          .logo span {
+               color: #f39c12;
+          }
+
+          nav ul {
+               display: flex;
+               list-style: none;
+               gap: 25px;
+          }
+
+          nav a {
+               text-decoration: none;
+               color: #26351f;
+               font-weight: bold;
+          }
+
+          nav a:hover {
+               color: #2e7d32;
+          }
+
+          /* HERO */
+
+          .hero {
+               min-height: 620px;
+               padding: 80px 7%;
+               display: flex;
+               align-items: center;
+               justify-content: space-between;
+               gap: 40px;
+               background: linear-gradient(135deg, #fff8df, #edf8e9);
+          }
+
+          .hero-text {
+               max-width: 600px;
+          }
+
+          .hero-text small {
+               color: #e67e22;
+               font-weight: bold;
+               letter-spacing: 2px;
+          }
+
+          .hero-text h1 {
+               font-size: clamp(48px, 7vw, 82px);
+               line-height: 1;
+               color: #28652c;
+               margin: 20px 0;
+          }
+
+          .hero-text h1 span {
+               color: #f39c12;
+          }
+
+          .hero-text p {
+               font-size: 18px;
+               line-height: 1.8;
+               color: #66705f;
+               margin-bottom: 30px;
+          }
+
+          .btn {
+               display: inline-block;
+               padding: 15px 25px;
+               border-radius: 30px;
+               text-decoration: none;
+               font-weight: bold;
+          }
+
+          .btn-primary {
+               background: #2e7d32;
+               color: white;
+          }
+
+          .btn-primary:hover {
+               background: #225f26;
+          }
+
+          /* FRUIT CIRCLE */
+
+          .fruit-circle {
+               width: 390px;
+               height: 390px;
+               background: white;
+               border-radius: 50%;
+               box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+               display: flex;
+               justify-content: center;
+               align-items: center;
+               position: relative;
+          }
+
+          .big-fruit {
+               font-size: 100px;
+          }
+
+          .small-fruit {
+               position: absolute;
+               font-size: 65px;
+               animation: float 3s infinite ease-in-out;
+          }
+
+          .f1 {
+               top: 50px;
+               left: 150px;
+          }
+
+          .f2 {
+               top: 150px;
+               left: 50px;
+          }
+
+          .f3 {
+               top: 150px;
+               right: 50px;
+          }
+
+          .f4 {
+               bottom: 55px;
+               left: 100px;
+          }
+
+          .f5 {
+               bottom: 55px;
+               right: 100px;
+          }
+
+          @keyframes float {
+
+               0%,
+               100% {
+                    transform: translateY(0);
+               }
+
+               50% {
+                    transform: translateY(-12px);
+               }
+          }
+
+          /* FRUIT SECTION */
+
+          section {
+               padding: 80px 7%;
+          }
+
+          .section-title {
+               text-align: center;
+               max-width: 700px;
+               margin: auto auto 45px;
+          }
+
+          .section-title small {
+               color: #e67e22;
+               font-weight: bold;
+               letter-spacing: 2px;
+          }
+
+          .section-title h2 {
+               color: #28652c;
+               font-size: 42px;
+               margin: 12px 0;
+          }
+
+          .section-title p {
+               color: #6b7566;
+               line-height: 1.7;
+          }
+
+          /* SEARCH */
+
+          .search-container {
+               max-width: 650px;
+               margin: auto;
+               display: flex;
+               background: white;
+               border-radius: 50px;
+               overflow: hidden;
+               box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+               border: 2px solid #e7eadc;
+          }
+
+          .search-container input {
+               flex: 1;
+               border: none;
+               outline: none;
+               padding: 19px 25px;
+               font-size: 17px;
+          }
+
+          .search-container button {
+               border: none;
+               padding: 0 30px;
+               background: #2e7d32;
+               color: white;
+               font-size: 16px;
+               font-weight: bold;
+               cursor: pointer;
+          }
+
+          .search-container button:hover {
+               background: #215f25;
+          }
+
+          /* FRUIT CARDS */
+
+          .fruit-grid {
+               margin-top: 50px;
+               display: grid;
+               grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+               gap: 25px;
+          }
+
+          .fruit-card {
+               background: white;
+               border-radius: 25px;
+               overflow: hidden;
+               box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07);
+               transition: 0.3s;
+          }
+
+          .fruit-card:hover {
+               transform: translateY(-8px);
+          }
+
+          .fruit-picture {
+               height: 180px;
+               background: #f7f7e9;
+               display: flex;
+               align-items: center;
+               justify-content: center;
+               font-size: 90px;
+          }
+
+          .fruit-info {
+               padding: 22px;
+          }
+
+          .fruit-info h3 {
+               color: #28652c;
+               margin-bottom: 8px;
+          }
+
+          .fruit-info p {
+               color: #697366;
+               line-height: 1.6;
+          }
+
+          /* BENEFITS */
+
+          .benefits {
+               background: #f0f8eb;
+          }
+
+          .benefit-grid {
+               display: grid;
+               grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+               gap: 25px;
+          }
+
+          .benefit-card {
+               background: white;
+               padding: 30px;
+               text-align: center;
+               border-radius: 22px;
+               box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+          }
+
+          .benefit-card div {
+               font-size: 50px;
+               margin-bottom: 15px;
+          }
+
+          .benefit-card h3 {
+               color: #28652c;
+               margin-bottom: 10px;
+          }
+
+          .benefit-card p {
+               color: #697366;
+               line-height: 1.6;
+          }
+
+          /* MODAL / POPUP */
+
+          .modal {
+               display: none;
+               position: fixed;
+               inset: 0;
+               z-index: 5000;
+               background: rgba(15, 35, 18, 0.65);
+               backdrop-filter: blur(6px);
+               align-items: center;
+               justify-content: center;
+               padding: 20px;
+          }
+
+          .modal.show {
+               display: flex;
+          }
+
+          .modal-box {
+               width: 100%;
+               max-width: 650px;
+               max-height: 90vh;
+               overflow-y: auto;
+               background: white;
+               border-radius: 30px;
+               padding: 35px;
+               position: relative;
+               box-shadow: 0 25px 80px rgba(0, 0, 0, 0.25);
+               animation: popup 0.25s ease;
+          }
+
+          @keyframes popup {
+
+               from {
+                    opacity: 0;
+                    transform: scale(0.85);
+               }
+
+               to {
+                    opacity: 1;
+                    transform: scale(1);
+               }
+          }
+
+          .close-btn {
+               position: absolute;
+               right: 20px;
+               top: 18px;
+               width: 40px;
+               height: 40px;
+               border: none;
+               border-radius: 50%;
+               background: #f2f2e9;
+               color: #333;
+               font-size: 24px;
+               cursor: pointer;
+          }
+
+          .close-btn:hover {
+               background: #e8e8dc;
+          }
+
+          .popup-fruit {
+               text-align: center;
+               font-size: 110px;
+               margin-bottom: 10px;
+          }
+
+          .popup-title {
+               text-align: center;
+               color: #28652c;
+               font-size: 38px;
+               margin-bottom: 8px;
+          }
+
+          .popup-category {
+               text-align: center;
+               color: #e67e22;
+               font-weight: bold;
+               margin-bottom: 25px;
+          }
+
+          .popup-description {
+               text-align: center;
+               color: #687263;
+               line-height: 1.7;
+               margin-bottom: 25px;
+          }
+
+          .info-grid {
+               display: grid;
+               grid-template-columns: repeat(2, 1fr);
+               gap: 15px;
+          }
+
+          .info-box {
+               background: #f4f8ed;
+               padding: 20px;
+               border-radius: 18px;
+          }
+
+          .info-box h4 {
+               color: #28652c;
+               margin-bottom: 8px;
+          }
+
+          .info-box p {
+               color: #687263;
+               line-height: 1.6;
+               font-size: 14px;
+          }
+
+          /* NO RESULT */
+
+          .no-result {
+               text-align: center;
+          }
+
+          .no-result .emoji {
+               font-size: 70px;
+          }
+
+          .no-result h2 {
+               color: #28652c;
+               margin: 15px 0;
+          }
+
+          .no-result p {
+               color: #687263;
+               line-height: 1.6;
+          }
+
+          /* FOOTER */
+
+          footer {
+               background: #182718;
+               color: #cbd6c8;
+               text-align: center;
+               padding: 40px 20px;
+          }
+
+          footer .creator {
+               color: #f39c12;
+               font-size: 20px;
+               font-weight: bold;
+               margin-top: 10px;
+          }
+
+          /* MOBILE */
+
+          @media (max-width: 800px) {
+
+               nav ul {
+                    display: none;
+               }
+
+               .hero {
+                    flex-direction: column;
+                    text-align: center;
+                    padding: 60px 5%;
+               }
+
+               .fruit-circle {
+                    width: 300px;
+                    height: 300px;
+               }
+
+               .big-fruit {
+                    font-size: 75px;
+               }
+
+               .small-fruit {
+                    font-size: 48px;
+               }
+
+               .f1 {
+                    top: 40px;
+                    left: 115px;
+               }
+
+               .f2 {
+                    top: 110px;
+                    left: 35px;
+               }
+
+               .f3 {
+                    top: 110px;
+                    right: 35px;
+               }
+
+               .f4 {
+                    bottom: 40px;
+                    left: 70px;
+               }
+
+               .f5 {
+                    bottom: 40px;
+                    right: 70px;
+               }
+
+               .info-grid {
+                    grid-template-columns: 1fr;
+               }
+
+               .modal-box {
+                    padding: 30px 20px;
+               }
+
+          }
+     </style>
+</head>
+
+
+<body>
+
+
+     <!-- NAVIGATION -->
+
+     <nav>
+
+          <div class="logo">
+               Fruit<span>World</span> 🍊
+          </div>
+
+          <ul>
+               <li><a href="#home">Home</a></li>
+               <li><a href="#fruits">Fruits</a></li>
+               <li><a href="#benefits">Benefits</a></li>
+          </ul>
+
+     </nav>
+
+
+     <!-- HERO -->
+
+     <section class="hero" id="home">
+
+          <div class="hero-text">
+
+               <small>FRESH • NATURAL • DELICIOUS</small>
+
+               <h1>
+                    Discover the
+                    <span>World of Fruits.</span>
+               </h1>
+
+               <p>
+                    Learn about fruits, their nutrients, benefits,
+                    origins and the amazing things that make every
+                    fruit unique.
+               </p>
+
+               <a href="#fruits" class="btn btn-primary">
+                    Explore Fruits 🍎
+               </a>
+
+          </div>
+
+
+          <div class="fruit-circle">
+
+               <div class="big-fruit">🍎</div>
+
+               <div class="small-fruit f1">🍊</div>
+               <div class="small-fruit f2">🍓</div>
+               <div class="small-fruit f3">🍌</div>
+               <div class="small-fruit f4">🥭</div>
+               <div class="small-fruit f5">🍉</div>
+
+          </div>
+
+     </section>
+
+
+     <!-- FRUITS -->
+
+     <section id="fruits">
+
+          <div class="section-title">
+
+               <small>EXPLORE THE COLLECTION</small>
+
+               <h2>Find Your Fruit</h2>
+
+               <p>
+                    Search for any fruit below. Type the name and
+                    the fruit information will pop up instantly.
+               </p>
+
+          </div>
+
+
+          <!-- SEARCH -->
+
+          <div class="search-container">
+
+               <input type="text" id="searchInput" placeholder="Search a fruit... e.g. Mango">
+
+               <button onclick="searchFruit()">
+                    Search
+               </button>
+
+          </div>
+
+
+          <!-- FRUIT CARDS -->
+
+          <div class="fruit-grid">
+
+               <div class="fruit-card">
+
+                    <div class="fruit-picture">
+                         🍎
+                    </div>
+
+                    <div class="fruit-info">
+
+                         <h3>Apple</h3>
+
+                         <p>
+                              Crisp, refreshing and naturally sweet.
+                         </p>
+
+                    </div>
+
+               </div>
+
+
+               <div class="fruit-card">
+
+                    <div class="fruit-picture">
+                         🍌
+                    </div>
+
+                    <div class="fruit-info">
+
+                         <h3>Banana</h3>
+
+                         <p>
+                              Soft, sweet and naturally rich in potassium.
+                         </p>
+
+                    </div>
+
+               </div>
+
+
+               <div class="fruit-card">
+
+                    <div class="fruit-picture">
+                         🍊
+                    </div>
+
+                    <div class="fruit-info">
+
+                         <h3>Orange</h3>
+
+                         <p>
+                              Juicy citrus fruit with a refreshing taste.
+                         </p>
+
+                    </div>
+
+               </div>
+
+
+               <div class="fruit-card">
+
+                    <div class="fruit-picture">
+                         🥭
+                    </div>
+
+                    <div class="fruit-info">
+
+                         <h3>Mango</h3>
+
+                         <p>
+                              Sweet tropical fruit with juicy golden flesh.
+                         </p>
+
+                    </div>
+
+               </div>
+
+
+               <div class="fruit-card">
+
+                    <div class="fruit-picture">
+                         🍓
+                    </div>
+
+                    <div class="fruit-info">
+
+                         <h3>Strawberry</h3>
+
+                         <p>
+                              Bright red, juicy and naturally sweet.
+                         </p>
+
+                    </div>
+
+               </div>
+
+
+               <div class="fruit-card">
+
+                    <div class="fruit-picture">
+                         🍉
+                    </div>
+
+                    <div class="fruit-info">
+
+                         <h3>Watermelon</h3>
+
+                         <p>
+                              Refreshing fruit with a high water content.
+                         </p>
+
+                    </div>
+
+               </div>
+
+
+               <div class="fruit-card">
+
+                    <div class="fruit-picture">
+                         🍍
+                    </div>
+
+                    <div class="fruit-info">
+
+                         <h3>Pineapple</h3>
+
+                         <p>
+                              Sweet and tangy tropical fruit.
+                         </p>
+
+                    </div>
+
+               </div>
+
+
+               <div class="fruit-card">
+
+                    <div class="fruit-picture">
+                         🍇
+                    </div>
+
+                    <div class="fruit-info">
+
+                         <h3>Grapes</h3>
+
+                         <p>
+                              Small, juicy fruits available in many colors.
+                         </p>
+
+                    </div>
+
+               </div>
+
+          </div>
+
+     </section>
+
+
+     <!-- BENEFITS -->
+
+     <section class="benefits" id="benefits">
+
+          <div class="section-title">
+
+               <small>FRUIT BENEFITS</small>
+
+               <h2>Why Eat Fruits?</h2>
+
+               <p>
+                    Fruits provide a variety of nutrients that can
+                    contribute to a balanced diet.
+               </p>
+
+          </div>
+
+
+          <div class="benefit-grid">
+
+               <div class="benefit-card">
+
+                    <div>💪</div>
+
+                    <h3>Natural Nutrients</h3>
+
+                    <p>
+                         Fruits provide vitamins, minerals and fiber.
+                    </p>
+
+               </div>
+
+
+               <div class="benefit-card">
+
+                    <div>💧</div>
+
+                    <h3>Hydration</h3>
+
+                    <p>
+                         Many fruits contain a large amount of water.
+                    </p>
+
+               </div>
+
+
+               <div class="benefit-card">
+
+                    <div>❤️</div>
+
+                    <h3>Healthy Choice</h3>
+
+                    <p>
+                         Fruits can be part of a balanced and varied diet.
+                    </p>
+
+               </div>
+
+
+               <div class="benefit-card">
+
+                    <div>🌱</div>
+
+                    <h3>Natural Goodness</h3>
+
+                    <p>
+                         Fruits contain naturally occurring plant compounds.
+                    </p>
+
+               </div>
+
+          </div>
+
+     </section>
+
+
+     <!-- POPUP -->
+
+     <div class="modal" id="fruitModal">
+
+          <div class="modal-box">
+
+               <button class="close-btn" onclick="closeModal()">
+                    ×
+               </button>
+
+               <div id="modalContent"></div>
+
+          </div>
+
+     </div>
+
+
+     <!-- FOOTER -->
+
+     <footer>
+
+          <p>
+               🍊 FruitWorld — Discover. Learn. Enjoy.
+          </p>
+
+          <p class="creator">
+               Created by Chosen Dev
+          </p>
+
+     </footer>
+
+
+     <script>
+
+
+          /* FRUIT DATABASE */
+
+          const fruits = {
+
+               apple: {
+
+                    name: "Apple",
+
+                    emoji: "🍎",
+
+                    category: "Pome Fruit",
+
+                    description:
+                         "Apples are crisp and refreshing fruits that come in many varieties, from sweet to tart.",
+
+                    benefits:
+                         "Apples provide fiber and vitamin C and can be part of a balanced diet.",
+
+                    nutrients:
+                         "Fiber, vitamin C, potassium and plant compounds.",
+
+                    origin:
+                         "Apples have a long history of cultivation in Central Asia and are now grown around the world.",
+
+                    how:
+                         "Wash well and enjoy whole, sliced, in salads or cooked.",
+
+                    fact:
+                         "Apples belong to the rose family of plants."
+
+               },
+
+
+               banana: {
+
+                    name: "Banana",
+
+                    emoji: "🍌",
+
+                    category: "Tropical Fruit",
+
+                    description:
+                         "Bananas are soft, naturally sweet fruits enjoyed around the world.",
+
+                    benefits:
+                         "Bananas provide carbohydrates, potassium, vitamin B6 and fiber.",
+
+                    nutrients:
+                         "Potassium, vitamin B6, vitamin C, carbohydrates and fiber.",
+
+                    origin:
+                         "Bananas are believed to have originated in tropical regions of Southeast Asia.",
+
+                    how:
+                         "Peel and eat directly, or add to smoothies, cereal and desserts.",
+
+                    fact:
+                         "Botanically, bananas are classified as berries."
+
+               },
+
+
+               orange: {
+
+                    name: "Orange",
+
+                    emoji: "🍊",
+
+                    category: "Citrus Fruit",
+
+                    description:
+                         "Oranges are juicy citrus fruits with a sweet and slightly tangy flavor.",
+
+                    benefits:
+                         "Oranges are especially known for vitamin C and also provide fiber.",
+
+                    nutrients:
+                         "Vitamin C, folate, potassium and fiber.",
+
+                    origin:
+                         "Sweet oranges have a long cultivation history in Asia and are now grown in warm regions worldwide.",
+
+                    how:
+                         "Peel and eat the segments or use them in salads and drinks.",
+
+                    fact:
+                         "Oranges are among the world's most widely cultivated citrus fruits."
+
+               },
+
+
+               mango: {
+
+                    name: "Mango",
+
+                    emoji: "🥭",
+
+                    category: "Tropical Fruit",
+
+                    description:
+                         "Mango is a juicy tropical fruit with sweet golden flesh and a large seed.",
+
+                    benefits:
+                         "Mango provides vitamin C, vitamin A, fiber and other nutrients.",
+
+                    nutrients:
+                         "Vitamin C, vitamin A, folate, fiber and carbohydrates.",
+
+                    origin:
+                         "Mangoes originated in South Asia and are now grown throughout many tropical and subtropical regions.",
+
+                    how:
+                         "Peel the mango, remove the large seed and enjoy the juicy flesh fresh.",
+
+                    fact:
+                         "Mango has been cultivated in South Asia for thousands of years."
+
+               },
+
+
+               strawberry: {
+
+                    name: "Strawberry",
+
+                    emoji: "🍓",
+
+                    category: "Berry",
+
+                    description:
+                         "Strawberries are bright red fruits with a sweet flavor and fresh aroma.",
+
+                    benefits:
+                         "Strawberries provide vitamin C, fiber and plant compounds.",
+
+                    nutrients:
+                         "Vitamin C, manganese, folate and fiber.",
+
+                    origin:
+                         "Modern garden strawberries developed from plants native to Europe and the Americas.",
+
+                    how:
+                         "Wash carefully and enjoy fresh or sliced.",
+
+                    fact:
+                         "The fleshy part of a strawberry is not botanically the true fruit."
+
+               },
+
+
+               watermelon: {
+
+                    name: "Watermelon",
+
+                    emoji: "🍉",
+
+                    category: "Melon",
+
+                    description:
+                         "Watermelon is a large, juicy fruit that is especially refreshing when served cold.",
+
+                    benefits:
+                         "Its high water content makes it refreshing, and it also provides vitamins and plant compounds.",
+
+                    nutrients:
+                         "Water, vitamin C, vitamin A and potassium.",
+
+                    origin:
+                         "Watermelon has ancient origins in Africa and is now cultivated in warm regions worldwide.",
+
+                    how:
+                         "Cut open, slice and enjoy the juicy flesh.",
+
+                    fact:
+                         "Watermelon is related to cucumbers, pumpkins and squash."
+
+               },
+
+
+               pineapple: {
+
+                    name: "Pineapple",
+
+                    emoji: "🍍",
+
+                    category: "Tropical Fruit",
+
+                    description:
+                         "Pineapple is a tropical fruit with a delicious sweet and tangy flavor.",
+
+                    benefits:
+                         "Pineapple provides vitamin C, manganese and fiber.",
+
+                    nutrients:
+                         "Vitamin C, manganese, fiber and carbohydrates.",
+
+                    origin:
+                         "Pineapple originated in tropical South America and spread to many tropical regions.",
+
+                    how:
+                         "Remove the tough skin and core before eating the juicy flesh.",
+
+                    fact:
+                         "A pineapple forms from many small flowers that fuse together."
+
+               },
+
+
+               grapes: {
+
+                    name: "Grapes",
+
+                    emoji: "🍇",
+
+                    category: "Berry",
+
+                    description:
+                         "Grapes are small, juicy fruits that come in green, red, purple and other varieties.",
+
+                    benefits:
+                         "Grapes provide water, carbohydrates, vitamin K and plant compounds.",
+
+                    nutrients:
+                         "Vitamin K, copper, vitamin C and plant compounds.",
+
+                    origin:
+                         "Grapes have been cultivated for thousands of years across regions of Europe and Western Asia.",
+
+                    how:
+                         "Wash thoroughly and enjoy fresh.",
+
+                    fact:
+                         "Grapes grow in clusters on woody vines."
+
+               }
+
+          };
+
+
+          /* SEARCH FUNCTION */
+
+          function searchFruit() {
+
+               const input =
+                    document
+                         .getElementById("searchInput")
+                         .value
+                         .toLowerCase()
+                         .trim();
+
+
+               const modal =
+                    document.getElementById("fruitModal");
+
+
+               const content =
+                    document.getElementById("modalContent");
+
+
+               /* NOTHING TYPED */
+
+               if (input === "") {
+
+                    content.innerHTML = `
+
+            <div class="no-result">
+
+                <div class="emoji">🍎</div>
+
+                <h2>Search for a fruit</h2>
+
+                <p>
+                    Type a fruit name such as
+                    Mango, Apple, Banana or Orange.
+                </p>
+
+            </div>
+
+        `;
+
+                    modal.classList.add("show");
+
+                    return;
+               }
+
+
+               /* FIND FRUIT */
+
+               const fruit = fruits[input];
+
+
+               /* FRUIT DOES NOT EXIST */
+
+               if (!fruit) {
+
+                    content.innerHTML = `
+
+            <div class="no-result">
+
+                <div class="emoji">🔎</div>
+
+                <h2>Fruit Not Found</h2>
+
+                <p>
+                    We couldn't find
+                    "<strong>${input}</strong>".
+                    Try Mango, Apple, Banana,
+                    Orange, Strawberry or Watermelon.
+                </p>
+
+            </div>
+
+        `;
+
+                    modal.classList.add("show");
+
+                    return;
+               }
+
+
+               /* SHOW FRUIT IMMEDIATELY */
+
+               content.innerHTML = `
+
+        <div class="popup-fruit">
+            ${fruit.emoji}
+        </div>
+
+        <h2 class="popup-title">
+            ${fruit.name}
+        </h2>
+
+        <div class="popup-category">
+            ${fruit.category}
+        </div>
+
+        <p class="popup-description">
+            ${fruit.description}
+        </p>
+
+
+        <div class="info-grid">
+
+            <div class="info-box">
+
+                <h4>💪 Benefits</h4>
+
+                <p>
+                    ${fruit.benefits}
+                </p>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <h4>🧪 Nutrients</h4>
+
+                <p>
+                    ${fruit.nutrients}
+                </p>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <h4>🌍 Origin</h4>
+
+                <p>
+                    ${fruit.origin}
+                </p>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <h4>🍽️ How to Eat</h4>
+
+                <p>
+                    ${fruit.how}
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="info-box" style="margin-top:15px;">
+
+            <h4>💡 Did You Know?</h4>
+
+            <p>
+                ${fruit.fact}
+            </p>
+
+        </div>
+
+    `;
+
+
+               /* OPEN POPUP */
+
+               modal.classList.add("show");
+
+          }
+
+
+          /* CLOSE POPUP */
+
+          function closeModal() {
+
+               document
+                    .getElementById("fruitModal")
+                    .classList.remove("show");
+
+          }
+
+
+          /* ENTER KEY ALSO SEARCHES */
+
+          document
+               .getElementById("searchInput")
+               .addEventListener("keydown", function (event) {
+
+                    if (event.key === "Enter") {
+
+                         searchFruit();
+
+                    }
+
+               });
+
+
+          /* CLICK OUTSIDE POPUP TO CLOSE */
+
+          document
+               .getElementById("fruitModal")
+               .addEventListener("click", function (event) {
+
+                    if (event.target === this) {
+
+                         closeModal();
+
+                    }
+
+               });
+
+
+     </script>
+
+</body>
+
+</html>
