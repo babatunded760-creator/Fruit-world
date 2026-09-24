@@ -1,0 +1,23 @@
+{
+  "name": "fruit-world",
+  "version": "1.0.0",
+  "description": "FruitWorld - Discover the World of Fruits",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/babatunded760-creator/Fruit-world.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/babatunded760-creator/Fruit-world/issues"
+  },
+  "homepage": "https://github.com/babatunded760-creator/Fruit-world#readme",
+  "dependencies": {
+    "@vercel/analytics": "^2.0.1"
+  }
+}
